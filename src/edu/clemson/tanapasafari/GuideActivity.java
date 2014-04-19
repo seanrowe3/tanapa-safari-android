@@ -115,38 +115,10 @@ public class GuideActivity extends Activity {
 			if (l.distanceTo(poi.getLocation()) < poi.getRadius()) {
 				if (!poi.isInGeofence()) {
 					poi.setInGeofence(true);
-					TextView title, text;
-					
-					LayoutInflater li = LayoutInflater.from(this);
-					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-					View poiView = li.inflate(R.layout.activity_poi, null);
-					
-					alertDialogBuilder.setView(poiView);
-					title = (TextView) poiView.findViewById(R.id.poiTitle);
-					text = (TextView) poiView.findViewById(R.id.poiText);
-					title.setText(poi.getName());
-					text.setText(poi.getDescription());
-					
-					// Create Dialog box for user input 
-					alertDialogBuilder
-					.setCancelable(false)
-					.setPositiveButton("OK",
-					  new DialogInterface.OnClickListener() {
-					    @Override
-						public void onClick(DialogInterface dialog,int id) {
-						dialog.dismiss();
-					    }
-					  })
-					.setNegativeButton("Cancel",
-					  new DialogInterface.OnClickListener() {
-					    @Override
-						public void onClick(DialogInterface dialog,int id) {
-						dialog.cancel();
-					    }
-					  });
-
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
+					Intent poiActivityIntent = new Intent(this, POIActivity.class);
+					poiActivityIntent.putExtra("safariId", poi.getSafariId());
+					poiActivityIntent.putExtra("poiID", poi.getId());
+					startActivity(poiActivityIntent);
 
 				}
 			} else {
